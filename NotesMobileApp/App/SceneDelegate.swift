@@ -14,7 +14,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
        
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        let window = UIWindow(windowScene: windowScene)
+        
+        var navigationController = UINavigationController()
+        
+        let isOnBoardShow = UserDefaults.standard.bool(forKey: OnBoardingViewController.onBoardingKey)
+        //            !if isOnBoardShow тоже самое что и if isOnboardShow == false
+        //              if isOnBoardShow тоже самое что и if isOnboardShow == true
+        if isOnBoardShow == true {
+            navigationController = UINavigationController(rootViewController: NoteViewController())
+        }else{
+            navigationController = UINavigationController(rootViewController: OnBoardingViewController())
+        }
+        
+        window.rootViewController = navigationController
+        self.window = window
+        window.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
